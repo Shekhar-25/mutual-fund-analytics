@@ -94,3 +94,54 @@ summary_df = pd.DataFrame(summary)
 print(summary_df)
 
 print("\nETL Data Ingestion Completed Successfully.")
+print("\n" + "=" * 70)
+print("FUND MASTER ANALYSIS")
+print("=" * 70)
+
+fund_master = datasets["01_fund_master"]
+
+print("\nTotal Fund Houses:")
+print(fund_master["fund_house"].nunique())
+
+print("\nFund Houses:")
+print(sorted(fund_master["fund_house"].unique()))
+
+print("\nTotal Categories:")
+print(fund_master["category"].nunique())
+
+print("\nCategories:")
+print(sorted(fund_master["category"].unique()))
+
+print("\nTotal Sub Categories:")
+print(fund_master["sub_category"].nunique())
+
+print("\nSub Categories:")
+print(sorted(fund_master["sub_category"].unique()))
+
+print("\nTotal Risk Categories:")
+print(fund_master["risk_category"].nunique())
+
+print("\nRisk Categories:")
+print(sorted(fund_master["risk_category"].unique()))
+print("\n" + "="*70)
+print("AMFI CODE VALIDATION")
+print("="*70)
+
+fund_master = datasets["01_fund_master"]
+nav_history = datasets["02_nav_history"]
+
+fund_codes = set(fund_master["amfi_code"])
+nav_codes = set(nav_history["amfi_code"])
+
+missing_codes = fund_codes - nav_codes
+
+print(f"\nTotal Fund Master Codes : {len(fund_codes)}")
+print(f"Total NAV History Codes : {len(nav_codes)}")
+
+if len(missing_codes) == 0:
+    print("\n✅ All AMFI Codes from Fund Master exist in NAV History.")
+else:
+    print("\n❌ Missing AMFI Codes:")
+    print(missing_codes)
+
+print("\nValidation Completed Successfully.")
